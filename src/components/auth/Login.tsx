@@ -18,6 +18,8 @@ const SignIn = () => {
                 setError("");
                 setEmail("");
                 setPassword("");
+                // localStorage.setItem('testObject', testObject);
+
             })
             .catch((error) => {
                 console.log(error);
