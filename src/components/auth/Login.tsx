@@ -2,13 +2,14 @@ import {signInWithEmailAndPassword} from "firebase/auth";
 import s from "./auth.module.scss"
 import React, {useState} from "react";
 import {auth} from "../../firebase";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 
 const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate()
 
     function logIn(e: { preventDefault: () => void; }) {
         e.preventDefault();
@@ -18,8 +19,7 @@ const SignIn = () => {
                 setError("");
                 setEmail("");
                 setPassword("");
-                // localStorage.setItem('testObject', testObject);
-
+                navigate("/")
             })
             .catch((error) => {
                 console.log(error);
