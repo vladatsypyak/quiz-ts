@@ -18,15 +18,29 @@ const SignUp = () => {
         }
         createUserWithEmailAndPassword(auth, email, password)
             .then((user) => {
-                console.log(user);
                 setError("");
                 setEmail("");
                 setCopyPassword("");
                 setPassword("");
             })
             .catch((error) => {
-                if (error.code == "auth/weak-password") {
-                    setError("Пароль повинен містити мінімум 6 символів")
+                let errorMessage = "";
+                switch (error.code) {
+                    case "auth/weak-password":
+                        errorMessage = "Пароль повинен містити більше 6 символів";
+                        break;
+                    case "auth/email-already-in-use":
+                        errorMessage = "Користувач з даним email уже існує";
+                        break;
+                    case "auth/invalid-email":
+                        errorMessage = "Некоректний email";
+                        break;
+                    case "auth/user-disabled":
+                        errorMessage = "Аккаунт заблокований";
+                        break;
+                    default:
+                        errorMessage = "Сталася помилка. Спробуйте ще раз";
+                        break;
                 }
                 console.log(error.message)
             });
