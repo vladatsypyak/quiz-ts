@@ -1,57 +1,51 @@
 @import "../../variables.module";
 
+.main{
+  padding-top: 100px;
+}
 .flex_wrap {
   display: flex;
   flex-direction: column;
   gap: 15px;
-
 }
 
-.form {
-  max-width: 500px;
-  border: $light-grey solid 1px;
-  border-radius: 10px;
-  padding: 25px;
-  margin: 150px auto 0;
+.image_wrap {
   user-select: none;
+  margin: 15px auto;
+  width: fit-content;
 
-  .input_wrap {
-    width: 100%;
-  }
-
-  .title {
-    margin-bottom: 15px;
-    font-size: 18px;
-    color: $dark_text;
-  }
-
-  .label {
-    text-align: left;
-    margin-bottom: 5px;
-    color: $dark_text;
-    font-weight: 600;
-    font-size: 14px;
-  }
-
-  .input, .submit_btn {
-    width: 100%;
-
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
-    outline: none;
-    border: 1px solid $light-grey;
-    font-size: 16px;
-  }
-
-  .submit_btn {
-    font-size: 16px;
-    background-color: $primary_green;
-    color: $white;
-    font-weight: 600;
-    &:hover{
-      cursor: pointer;
-      background-color: $hover_button;
-    }
+  .image {
+    animation: customAni 7s ease 0s infinite normal none;
+    max-width: 300px;
+    height: auto;
   }
 }
+
+@keyframes customAni {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+//.image{
+//  animation: rotate-scale-up 10s linear infinite both;
+//}
+//@keyframes rotate-scale-up {
+//  0% {
+//    transform: scale(1) rotateZ(0);
+//  }
+//  50% {
+//    transform: scale(1.2) rotateZ(180deg);
+//  }
+//  100% {
+//    transform: scale(1) rotateZ(360deg);
+//  }
+//}
