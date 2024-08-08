@@ -5,8 +5,10 @@ import s from "./header.module.scss"
 function Header() {
     return (
        <header className={s.header}>
-           <p>лого</p>
-           <Link to={"/signup"}>Ввійти</Link>
+           <div className={`wrapper ${s.container}`}>
+               <p>лого</p>
+               <Link to={"/signup"}>Ввійти</Link>
+           </div>
        </header>
     );
 }
