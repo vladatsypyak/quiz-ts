@@ -11,7 +11,7 @@
 
 .image_wrap {
   user-select: none;
-  margin: 15px auto;
+  margin: 0 auto 40px ;
   width: fit-content;
 
   .image {
@@ -19,6 +19,31 @@
     max-width: 300px;
     height: auto;
   }
+}
+.flex_wrap{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 650px;
+  margin: 0 auto;
+}
+.btn{
+  display: block;
+  width: 250px;
+  padding: 25px 10px;
+  background-color: $purple_light;
+  border-radius: 5px;
+  font-size: 23px ;
+  font-weight: 600;
+  opacity: 0.9;
+  &:hover{
+    cursor: pointer;
+    opacity: 1 ;
+  }
+}
+.btn_play{
+  background-color: $purple_primary;
+  color: $white;
 }
 
 @keyframes customAni {

@@ -8,8 +8,8 @@ const Main = () => {
                 <img className={s.image} src={logo} alt="logo"/>
             </div>
             <div className={s.flex_wrap}>
-                <button className={`${s.btn} ${s.btn_play}`}>грати</button>
-                <button className={`${s.btn} ${s.btn_create}`}>створити квіз</button>
+                <button className={`${s.btn} ${s.btn_play}`}>Грати</button>
+                <button className={`${s.btn} ${s.btn_create}`}>Створити квіз</button>
             </div>
 
         </div>
