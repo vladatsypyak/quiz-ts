@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Login from "./components/auth/Login";
 import SignUp from "./components/auth/SignUp";
@@ -9,6 +8,7 @@ import Header from "./components/Header/Header";
 import {useDispatch, useSelector, TypedUseSelectorHook} from "react-redux";
 import {setUser} from "./redux/slices/userSlice";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
+import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 
 
 const useTypedSelector: TypedUseSelectorHook<any> = useSelector;
@@ -37,9 +37,12 @@ function App() {
         <div className="App">
             <Header/>
             <Routes>
+                <Route path={"/"} element={<Main/>}/>
+
                 <Route path={"/signup"} element={<SignUp/>}/>
                 <Route path={"/signin"} element={<Login/>}/>
-                <Route path={"/"} element={<Main/>}/>
+                <Route path={"/create-quiz"} element={<CreateQuiz/>}/>
+
             </Routes>
         </div>
     );
