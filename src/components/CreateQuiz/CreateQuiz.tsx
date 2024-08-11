@@ -6,8 +6,8 @@ const CreateQuiz = () => {
     return (
         <form className={s.container}>
             <div className={s.title_wrap}>
-                <p>Title</p>
-                <input type="text"/>
+                <p className={s.title}>Назва</p>
+                <input placeholder={"Назва квізу"} type="text"/>
             </div>
             <div className={s.question_section}>
                 <p className={s.number}>1</p>

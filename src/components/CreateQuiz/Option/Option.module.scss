@@ -1,0 +1,17 @@
+@import "../../../variables.module";
+
+.option {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  background-color: $white;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+  }
+}
