@@ -1,7 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import s from "./createQuiz.module.scss"
 import Option from "./Option/Option";
 const CreateQuiz = () => {
+
+
+
+
 
     return (
         <form className={s.container}>
@@ -15,16 +19,16 @@ const CreateQuiz = () => {
                  <input className={s.question} type="text"/>
                  <div className={s.options_wrap}>
                      <div className={s.option}>
-                         <Option/>
+                         <Option index={0} />
                      </div>
                      <div className={s.option}>
-                         <Option/>
+                         <Option index={1} />
                      </div>
                      <div className={s.option}>
-                         <Option/>
+                         <Option index={2}/>
                      </div>
                      <div className={s.option}>
-                         <Option/>
+                         <Option index={3}/>
                      </div>
                  </div>
              </div>

@@ -2,6 +2,7 @@
 
 .option {
   display: flex;
+  justify-content: space-between;
   gap: 5px;
   align-items: center;
   background-color: $white;
@@ -9,9 +10,24 @@
   padding: 10px;
   margin-bottom: 10px;
 
-  input {
+  .text_input {
     width: 100%;
     padding: 10px;
     border: none;
   }
+  input[type="file"] {
+    display: none;
+  }
+  img{
+    width: 30px;
+    height: auto;
+  }
+}
+
+
+.img_upload {
+
+  display: block;
+  cursor: pointer;
+
 }
