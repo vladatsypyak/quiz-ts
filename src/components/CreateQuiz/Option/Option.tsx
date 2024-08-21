@@ -4,6 +4,12 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCheck, faX} from '@fortawesome/free-solid-svg-icons'
 import {faImage} from "@fortawesome/free-regular-svg-icons";
 
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL,
+} from "firebase/storage";
+import {storage} from "../../../firebase";
 
 // @ts-ignore
 const Option = ({index}) => {
@@ -16,19 +22,31 @@ const Option = ({index}) => {
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         if (e.target.files && e.target.files[0]) {
-            console.log(e.target.files);
-            setFile(URL.createObjectURL(e.target.files[0]));
+            const selectedFile = e.target.files[0]
+            console.log(selectedFile);
+            setFile(URL.createObjectURL(selectedFile));
+            const storageRef = ref(storage, `images/${selectedFile.name}`);
+            uploadBytes(storageRef, selectedFile)
+                .then((snapshot) => {
+                    return getDownloadURL(snapshot.ref);
+                })
+                .then((url) => {
+                    console.log("File url:", url);
+                })
+                .catch((error) => {
+                    console.error(error.message);
+                });
         }
     }
+
 
     const onBtnClick = (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         setCorrect(!isCorrect)
     }
-    console.log(file)
     return (
         <div className={s.option}>
-            <p className={s.number}>{index+1}</p>
+            <p className={s.number}>{index + 1}</p>
             <label htmlFor={`img_upload_${index}`} className={s.img_upload}>
                 {file !== "" ?
                     <img src={file} alt=""/> : <FontAwesomeIcon icon={faImage} style={{color: "#636363",}}/>
