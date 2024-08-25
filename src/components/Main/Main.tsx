@@ -2,7 +2,9 @@ import React, {useState} from "react";
 import s from "./main.module.scss"
 import logo from "../../images/big_logo.png"
 import {Link} from "react-router-dom";
+
 const Main = () => {
+
     return (
         <div className={s.main}>
             <div className={s.image_wrap}>

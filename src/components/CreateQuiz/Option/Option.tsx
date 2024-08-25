@@ -11,16 +11,24 @@ import {
 } from "firebase/storage";
 import {storage} from "../../../firebase";
 
-// @ts-ignore
-const Option = ({index}) => {
+type OptionProps = {
+    index: number;
+    handleOptionChange: any,
+    optionIndex: number
+}
+
+const Option = ({index, optionIndex, handleOptionChange}: OptionProps) => {
     const [isCorrect, setCorrect] = useState(false)
     const crossImg = <FontAwesomeIcon icon={faX} style={{color: "#d21919",}}/>
     const checkImg = <FontAwesomeIcon icon={faCheck} style={{color: "#1eb83d",}}/>
     const btnImage = isCorrect ? checkImg : crossImg
 
     const [file, setFile] = useState("");
+    function handleTextChange(e: ChangeEvent<HTMLInputElement>, optionIndex: number){
+        handleOptionChange({index, optionIndex, field: "text", value: e.target.value})
+    }
 
-    function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
         if (e.target.files && e.target.files[0]) {
             const selectedFile = e.target.files[0]
             console.log(selectedFile);
@@ -28,9 +36,13 @@ const Option = ({index}) => {
             const storageRef = ref(storage, `images/${selectedFile.name}`);
             uploadBytes(storageRef, selectedFile)
                 .then((snapshot) => {
-                    return getDownloadURL(snapshot.ref);
+
+                    return getDownloadURL(snapshot.ref)
                 })
                 .then((url) => {
+                    console.log(url)
+                    handleOptionChange({index, optionIndex, field: "image", value: url})
+
                     console.log("File url:", url);
                 })
                 .catch((error) => {
@@ -46,18 +58,17 @@ const Option = ({index}) => {
     }
     return (
         <div className={s.option}>
-            <p className={s.number}>{index + 1}</p>
-            <label htmlFor={`img_upload_${index}`} className={s.img_upload}>
+            <p className={s.number}>{optionIndex + 1}</p>
+            <label htmlFor={`img_upload_${optionIndex}`} className={s.img_upload}>
                 {file !== "" ?
                     <img src={file} alt=""/> : <FontAwesomeIcon icon={faImage} style={{color: "#636363",}}/>
                 }
-                <input onChange={handleChange}
-                       id={`img_upload_${index}`}
+                <input onChange={handleImageChange}
+                       id={`img_upload_${optionIndex}`}
                        type="file"
                        accept=".gif,.jpg,.jpeg,.png"/>
             </label>
-            <input className={s.text_input} type="text"/>
-
+            <input onChange={(e)=>handleTextChange(e,optionIndex )}  className={s.text_input} type="text"/>
 
             <button onClick={onBtnClick}>{btnImage}</button>
         </div>
