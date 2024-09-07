@@ -5,13 +5,17 @@ export interface User {
     email: string;
     name: string;
 }
+
 export interface UserState {
-    user: User | null
+    user: User | null;
 }
 
-
 const initialState: UserState = {
-    user: null,
+    // user: null
+    user: {id: "1",
+    email: "a",
+    name: "l"}
+
 }
 
 export const userSlice = createSlice({

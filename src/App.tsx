@@ -15,10 +15,12 @@ const useTypedSelector: TypedUseSelectorHook<any> = useSelector;
 
 
 function App() {
-    const user = useTypedSelector(state => state.user)
+    const user = useTypedSelector(state => state.userSlice.user)
     const auth = getAuth();
-
+    console.log(user)
     const dispatch = useDispatch()
+
+
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -26,13 +28,13 @@ function App() {
                     id: user.uid,
                     email: user.email
                 }))
-                console.log(user)
             } else {
                 dispatch(setUser(null))
 
             }
         });
     }, [])
+
     return (
         <div className="App">
             <Header/>

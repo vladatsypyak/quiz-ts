@@ -14,16 +14,18 @@ import {storage} from "../../../firebase";
 type OptionProps = {
     index: number;
     handleOptionChange: any,
-    optionIndex: number
+    optionIndex: number,
+    value: string | null,
+    image: string
 }
 
-const Option = ({index, optionIndex, handleOptionChange}: OptionProps) => {
+const Option = ({index, optionIndex, handleOptionChange, value, image}: OptionProps) => {
     const [isCorrect, setCorrect] = useState(false)
     const crossImg = <FontAwesomeIcon icon={faX} style={{color: "#d21919",}}/>
     const checkImg = <FontAwesomeIcon icon={faCheck} style={{color: "#1eb83d",}}/>
     const btnImage = isCorrect ? checkImg : crossImg
 
-    const [file, setFile] = useState("");
+    const [file, setFile] = useState(image);
     function handleTextChange(e: ChangeEvent<HTMLInputElement>, optionIndex: number){
         handleOptionChange({index, optionIndex, field: "text", value: e.target.value})
     }
@@ -59,16 +61,16 @@ const Option = ({index, optionIndex, handleOptionChange}: OptionProps) => {
     return (
         <div className={s.option}>
             <p className={s.number}>{optionIndex + 1}</p>
-            <label htmlFor={`img_upload_${optionIndex}`} className={s.img_upload}>
+            <label htmlFor={`img_upload_${index}_${optionIndex}`} className={s.img_upload}>
                 {file !== "" ?
                     <img src={file} alt=""/> : <FontAwesomeIcon icon={faImage} style={{color: "#636363",}}/>
                 }
                 <input onChange={handleImageChange}
-                       id={`img_upload_${optionIndex}`}
+                       id={`img_upload_${index}_${optionIndex}`}
                        type="file"
                        accept=".gif,.jpg,.jpeg,.png"/>
             </label>
-            <input onChange={(e)=>handleTextChange(e,optionIndex )}  className={s.text_input} type="text"/>
+            <input value={value || ""} onChange={(e)=>handleTextChange(e,optionIndex )}  className={s.text_input} type="text"/>
 
             <button onClick={onBtnClick}>{btnImage}</button>
         </div>

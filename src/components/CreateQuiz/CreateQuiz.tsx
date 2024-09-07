@@ -3,7 +3,8 @@ import s from "./createQuiz.module.scss"
 import Option from "./Option/Option";
 import {collection, addDoc} from "firebase/firestore";
 import {db} from '../../firebase';
-
+import {useSelector} from "react-redux";
+import {RootState} from '../../redux/store';
 
 type Option = {
     text: string,
@@ -18,20 +19,19 @@ type HandleOptionChangeParams = {
 }
 
 type Question = {
-    index: number,
     question: string,
     options: Option[]
 }
 
 const quizDataInitialSate = [
     {
-        index: 0,
         question: "",
         options: [{text: "", image: ""}, {text: "", image: ""}, {text: "", image: ""}, {text: "", image: ""}]
     }
 ]
 
 const CreateQuiz = () => {
+    const user = useSelector((store: RootState) => store.userSlice.user)
     const [quizData, setQuizData] = useState<Question[]>(quizDataInitialSate)
     const [title, setTitle] = useState<string>("")
 
@@ -54,10 +54,18 @@ const CreateQuiz = () => {
         console.log(quizData)
     }
 
-    console.log(quizData)
-
     function handleTitleChange(e: ChangeEvent<HTMLInputElement>) {
         setTitle(e.target.value)
+    }
+
+    function handleCopyClick(index: number) {
+        console.log(index)
+        const copiedQuestion = structuredClone(quizData[index])
+        console.log(copiedQuestion)
+        const newQuizData = [...quizData]
+        newQuizData.splice(index + 1, 0, copiedQuestion)
+        console.log(newQuizData)
+        setQuizData(newQuizData)
     }
 
     const storeQuizData = async (e: FormEvent<HTMLFormElement>) => {
@@ -66,6 +74,7 @@ const CreateQuiz = () => {
             const docRef = await addDoc(collection(db, "quiz"), {
                 quizData: {
                     ...quizData,
+                    user: user?.id,
                     title: title
                 },
             });
@@ -77,7 +86,6 @@ const CreateQuiz = () => {
     const handleAddQuestionBtn = (e: any) => {
         e.preventDefault()
         const newQuizData = [...quizData, {
-            index: 0,
             question: "",
             options: [{text: "", image: ""}, {text: "", image: ""}, {text: "", image: ""}, {text: "", image: ""}]
         }]
@@ -93,22 +101,26 @@ const CreateQuiz = () => {
             </div>
 
             {quizData.map(el => {
+                const index = quizData.indexOf(el)
                 return <div className={s.question_section}>
-                    <p className={s.number}>{el.index + 1}</p>
+                    <p className={s.number}>{index + 1}</p>
                     <div className={s.question_wrap}>
-                        <input onChange={(e) => handleQuestionChange(e, el.index)} className={s.question} type="text"/>
+                        <input value={el.question || ""} onChange={(e) => handleQuestionChange(e, index)} className={s.question} type="text"/>
                         <div className={s.options_wrap}>
                             {el.options.map(option => {
                                 return <div className={s.option}>
                                     <Option handleOptionChange={handleOptionChange}
-                                            optionIndex={el.options.indexOf(option)} index={el.index}/>
+                                           value={option.text}
+                                            image={option.image}
+                                            optionIndex={el.options.indexOf(option)}
+                                            index={index}/>
                                 </div>
                             })}
                         </div>
 
                     </div>
                     <div className={s.question_buttons}>
-                        <button>c</button>
+                        <button onClick={()=>handleCopyClick(index)}>c</button>
                         <button>d</button>
                     </div>
                 </div>
