@@ -1,9 +1,21 @@
 import React, {useState} from "react";
 import s from "./main.module.scss"
 import logo from "../../images/big_logo.png"
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
 
 const Main = () => {
+    const user = useSelector((store: RootState) => store.userSlice.user)
+    const navigate = useNavigate()
+
+    function onCreateQuiz() {
+        if (!user) {
+            navigate("signin")
+        } else {
+            navigate("/create-quiz")
+        }
+    }
 
     return (
         <div className={s.main}>
@@ -12,7 +24,9 @@ const Main = () => {
             </div>
             <div className={s.flex_wrap}>
                 <button className={`${s.btn} ${s.btn_play}`}>Грати</button>
-                <button className={`${s.btn} ${s.btn_create}`}><Link to={"/create-quiz"}>Створити квіз</Link></button>
+                <button onClick={onCreateQuiz} className={`${s.btn} ${s.btn_create}`}>Створити
+                    квіз
+                </button>
             </div>
 
         </div>
