@@ -9,6 +9,7 @@ import {useDispatch, useSelector, TypedUseSelectorHook} from "react-redux";
 import {setUser} from "./redux/slices/userSlice";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
+import Home from "./components/Home/Home";
 
 
 const useTypedSelector: TypedUseSelectorHook<any> = useSelector;
@@ -40,6 +41,7 @@ function App() {
             <Header/>
             <Routes>
                 <Route path={"/"} element={<Main/>}/>
+                <Route path={"/home"} element={<Home/>}/>
 
                 <Route path={"/signup"} element={<SignUp/>}/>
                 <Route path={"/signin"} element={<Login/>}/>
