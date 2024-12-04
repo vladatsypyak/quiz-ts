@@ -13,7 +13,11 @@ function Header() {
            <div className={`wrapper ${s.container}`}>
                <p>лого</p>
 
-               {user ? <Link to={"/home"}>acc</Link>  : <Link to={"/signup"}>Ввійти</Link>  }
+             <div className={s.icons}>
+                 {user ? <Link to={"/home"}>home</Link>  : null }
+
+                 {user ? <Link to={"/signout"}>вийти</Link>  : <Link to={"/signup"}>Ввійти</Link>  }
+             </div>
 
            </div>
        </header>
