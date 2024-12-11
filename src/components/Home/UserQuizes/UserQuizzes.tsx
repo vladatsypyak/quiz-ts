@@ -10,18 +10,16 @@ import Quiz from "./Quiz";
 const UserQuizzes = ({quizzes} : {quizzes: QuizType[]}) => {
     const user = useSelector((store: RootState) => store.userSlice.user)
     const navigate = useNavigate()
-    function onQuizClick(id: any) {
-        console.log(id)
-    }
+
 
     return (
         <div className={s.wrapper}>
             {
                 quizzes.map((el)=> {
+                    console.log(el)
                     return (
-                        <div onClick={()=>onQuizClick(el.id)}>
+
                             <Quiz  quiz={el}/>
-                        </div>
                     )
                 })
             }

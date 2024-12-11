@@ -40,10 +40,7 @@ const CreateQuiz = () => {
         try {
 
             const docRef = await addDoc(collection(db, "quiz"), {
-                    questions : {
-                        ...quizData
-                    }
-                 ,
+                    questions : [...quizData],
                     user: user?.id,
                     title: title
 

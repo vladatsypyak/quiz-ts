@@ -10,6 +10,7 @@ import {setUser} from "./redux/slices/userSlice";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import Home from "./components/Home/Home";
+import FullQuiz from "./components/Home/UserQuizes/FullQuiz";
 
 
 const useTypedSelector: TypedUseSelectorHook<any> = useSelector;
@@ -18,7 +19,6 @@ const useTypedSelector: TypedUseSelectorHook<any> = useSelector;
 function App() {
     const user = useTypedSelector(state => state.userSlice.user)
     const auth = getAuth();
-    console.log(user)
     const dispatch = useDispatch()
 
 
@@ -42,6 +42,7 @@ function App() {
             <Routes>
                 <Route path={"/"} element={<Main/>}/>
                 <Route path={"/home"} element={<Home/>}/>
+                <Route path={`/fullQuiz/:id`} element={<FullQuiz/>}/>
 
                 <Route path={"/signup"} element={<SignUp/>}/>
                 <Route path={"/signin"} element={<Login/>}/>

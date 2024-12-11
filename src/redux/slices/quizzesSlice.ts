@@ -1,6 +1,8 @@
 import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
 import {collection, getDocs} from "firebase/firestore";
 import {db} from '../../firebase';
+import { doc, getDoc } from "firebase/firestore";
+
 import exp from "constants";
 
 // Define the Quiz type
@@ -39,6 +41,24 @@ export const fetchQuizzes = createAsyncThunk<QuizType[], void, { rejectValue: st
         }
     }
 );
+
+export const fetchQuizById = async (docId: string) => {
+    try {
+        const docRef = doc(db,"quiz" , docId); // Reference the document
+        const docSnap = await getDoc(docRef);         // Fetch the document
+
+        if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+            console.log(docSnap.data())
+            return docSnap.data(); // The document data
+        } else {
+            console.log("No such document!");
+            return null;
+        }
+    } catch (error) {
+        console.error("Error fetching document:", error);
+    }
+};
 
 const initialState: QuizzesState = {
     quizzes: [],

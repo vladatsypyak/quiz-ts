@@ -1,7 +1,14 @@
 @import "../../../variables.module";
 
 
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  user-select: none;
 
+
+}
 .title_wrap {
   width: 100%;
   margin-bottom: 20px;

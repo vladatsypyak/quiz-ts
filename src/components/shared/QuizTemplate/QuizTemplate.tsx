@@ -25,7 +25,7 @@ type Question = {
 // @ts-ignore
 const QuizTemplate = ({initialQuizData, initialTitle, storeQuizData} ) => {
 
-    const [quizData, setQuizData] = useState(initialQuizData)
+    const [quizData, setQuizData] = useState(initialQuizData || [])
     const [title, setTitle] = useState(initialTitle)
 
     const handleOptionChange = ({index, optionIndex, field, value}: HandleOptionChangeParams) => {
@@ -43,7 +43,6 @@ function handleQuestionChange(e: ChangeEvent<HTMLInputElement>, index: number) {
     const newQuizData = [...quizData];
     newQuizData[index].question = e.target.value
     setQuizData(newQuizData)
-    console.log(quizData)
 }
 
 function handleTitleChange(e: ChangeEvent<HTMLInputElement>) {

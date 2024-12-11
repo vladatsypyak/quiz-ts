@@ -9,10 +9,12 @@ import {QuizType} from "../../../redux/slices/quizzesSlice";
 const Quiz = ({quiz}: {quiz:QuizType}) => {
     const user = useSelector((store: RootState) => store.userSlice.user)
     const navigate = useNavigate()
-    console.log(user)
-
+    console.log(quiz)
+    function onQuizClick() {
+        navigate(`/fullQuiz/${quiz.id}`)
+    }
     return (
-        <div className={s.quiz_wrapper}>
+        <div onClick={onQuizClick} className={s.quiz_wrapper}>
             <p>{quiz.title}</p>
             <div className={s.buttons}>
                 <p>Грати</p>
