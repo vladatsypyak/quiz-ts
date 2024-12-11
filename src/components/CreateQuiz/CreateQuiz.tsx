@@ -5,7 +5,7 @@ import {collection, addDoc} from "firebase/firestore";
 import {db} from '../../firebase';
 import {useSelector} from "react-redux";
 import {RootState} from '../../redux/store';
-import QuizTemplate from "./QuizTemplate";
+import QuizTemplate from "../shared/QuizTemplate/QuizTemplate";
 
 type Option = {
     text: string,
