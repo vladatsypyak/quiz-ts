@@ -9,7 +9,7 @@ import {QuizType} from "../../../redux/slices/quizzesSlice";
 const Quiz = ({quiz}: {quiz:QuizType}) => {
     const user = useSelector((store: RootState) => store.userSlice.user)
     const navigate = useNavigate()
-
+    console.log(user)
 
     return (
         <div className={s.quiz_wrapper}>

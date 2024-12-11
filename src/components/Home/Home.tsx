@@ -25,8 +25,6 @@ const Home = () => {
     useEffect(() => {
         dispatch(fetchQuizzes());
 
-
-
     }, [])
     console.log(quizzes)
     return (
