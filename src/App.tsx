@@ -49,7 +49,7 @@ function App() {
                 <Route path={"/signup"} element={<SignUp/>}/>
                 <Route path={"/signin"} element={<Login/>}/>
                 <Route path={"/create-quiz"} element={<CreateQuiz/>}/>
-                <Route path={"/host/initial-screen/:gameCode"} element={<InitialScreen/>}/>
+                <Route path={"/host/initial-screen/:gameId"} element={<InitialScreen/>}/>
                 <Route path={"/player/firstScreen"} element={<FirstScreen/>}/>
 
 

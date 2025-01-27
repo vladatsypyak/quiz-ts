@@ -25,7 +25,7 @@ const Quiz = ({quiz}: { quiz: QuizType }) => {
                 quizId: quizId, // Reference the quiz this game is based on
                 gameCode: gameCode, // Unique game code for players to join
                 status: "waiting", // Game status (waiting for players to join)
-                players: {}, // Players will be added here
+                players: [], // Players will be added here
                 results: {}, // Store results here after the game ends
                 currentQuestion: 1, // Start with the first question
                 createdAt: new Date(), // Timestamp for when the game was created
@@ -33,7 +33,7 @@ const Quiz = ({quiz}: { quiz: QuizType }) => {
 
             console.log("Game started with ID:", gameRef.id);
             console.log("Game code for players to join:", gameCode);
-            navigate(`/host/initial-screen/${gameCode}`)
+            navigate(`/host/initial-screen/${gameRef.id}`)
         } catch (error) {
             console.error("Error starting the game:", error);
         }
