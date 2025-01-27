@@ -1,15 +1,16 @@
 import React, {ChangeEvent, FormEvent, useState} from "react";
 import s from "./quizTemplate.module.scss"
+import {useParams} from "react-router-dom";
 
 
 
 // @ts-ignore
-const InitialScreen = (code, quizData ) => {
-
+const InitialScreen = ( ) => {
+    const { gameCode } = useParams();
 
     return (
         <div>
-            <p>{code}</p>
+            <p>{gameCode}</p>
             <button>start</button>
         </div>
 

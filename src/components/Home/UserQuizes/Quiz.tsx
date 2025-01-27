@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../../redux/store";
 import {QuizType} from "../../../redux/slices/quizzesSlice";
 import {db} from "../../../firebase";
-import {doc, setDoc} from "firebase/firestore";
+import {addDoc, doc, setDoc, collection} from "firebase/firestore";
 
 
 const Quiz = ({quiz}: { quiz: QuizType }) => {
@@ -17,24 +17,28 @@ const Quiz = ({quiz}: { quiz: QuizType }) => {
         navigate(`/fullQuiz/${quiz.id}`)
     }
 
-    const onHostClick = async (quizId: any) => {
-        console.log(quizId)
-        const gameRef = doc(db, "games", quizId);
-        const gameCode = Math.floor((Math.random()*1000)).toString().slice(0,5)
+    const onHostClick = async (quizId: string) => {
+        const gameCode = Math.random().toString(36).slice(2, 7).toUpperCase(); // Generate a 5-character unique game code
         try {
-            await setDoc(gameRef, {
-                quizId: quizId,
-                gameCode: gameCode,
-                status: "started",
-                players: {},
-                results: {},
-                currentQuestion: 1,
+            // Create a new document in the "games" collection with an auto-generated ID
+            const gameRef = await addDoc(collection(db, "games"), {
+                quizId: quizId, // Reference the quiz this game is based on
+                gameCode: gameCode, // Unique game code for players to join
+                status: "waiting", // Game status (waiting for players to join)
+                players: {}, // Players will be added here
+                results: {}, // Store results here after the game ends
+                currentQuestion: 1, // Start with the first question
+                createdAt: new Date(), // Timestamp for when the game was created
             });
-            console.log("InitialScreen started");
+
+            console.log("Game started with ID:", gameRef.id);
+            console.log("Game code for players to join:", gameCode);
+            navigate(`/host/initial-screen/${gameCode}`)
         } catch (error) {
-            console.error("Error starting game: ", error);
+            console.error("Error starting the game:", error);
         }
-    }
+
+    };
     return (
         <div onClick={onQuizClick} className={s.quiz_wrapper}>
             <p>{quiz.title}</p>
