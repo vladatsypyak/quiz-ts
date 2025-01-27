@@ -30,7 +30,7 @@ const Quiz = ({quiz}: { quiz: QuizType }) => {
                 results: {},
                 currentQuestion: 1,
             });
-            console.log("Game started");
+            console.log("InitialScreen started");
         } catch (error) {
             console.error("Error starting game: ", error);
         }

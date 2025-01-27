@@ -7,22 +7,8 @@ import {useSelector} from "react-redux";
 import {RootState} from '../../redux/store';
 import QuizTemplate from "../shared/QuizTemplate/QuizTemplate";
 
-type Option = {
-    text: string,
-    image: string
-}
 
-type HandleOptionChangeParams = {
-    index: number;
-    optionIndex: number;
-    field: keyof Option;
-    value: string
-}
 
-type Question = {
-    question: string,
-    options: Option[]
-}
 
 const quizDataInitialSate = [
     {

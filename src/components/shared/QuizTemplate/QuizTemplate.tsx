@@ -20,10 +20,14 @@ type Question = {
     options: Option[]
 }
 
+type QuizTemplateProps = {
+    initialQuizData: Question[],
+    initialTitle: string,
+    storeQuizData: any
+}
 
 
-// @ts-ignore
-const QuizTemplate = ({initialQuizData, initialTitle, storeQuizData} ) => {
+const QuizTemplate = ({initialQuizData, initialTitle, storeQuizData}: QuizTemplateProps ) => {
 
     const [quizData, setQuizData] = useState(initialQuizData || [])
     const [title, setTitle] = useState(initialTitle)
