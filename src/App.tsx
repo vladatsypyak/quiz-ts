@@ -13,6 +13,7 @@ import Home from "./components/Home/Home";
 import FullQuiz from "./components/Home/UserQuizes/FullQuiz";
 import InitialScreen from "./components/HostGameScreen/InitialScreen";
 import FirstScreen from "./components/Player/FirstScreen";
+import Game from "./components/HostGameScreen/Game";
 
 
 const useTypedSelector: TypedUseSelectorHook<any> = useSelector;
@@ -50,6 +51,8 @@ function App() {
                 <Route path={"/signin"} element={<Login/>}/>
                 <Route path={"/create-quiz"} element={<CreateQuiz/>}/>
                 <Route path={"/host/initial-screen/:gameId"} element={<InitialScreen/>}/>
+                <Route path={"/host/game/:gameId"} element={<Game/>}/>
+
                 <Route path={"/player/firstScreen"} element={<FirstScreen/>}/>
 
 
