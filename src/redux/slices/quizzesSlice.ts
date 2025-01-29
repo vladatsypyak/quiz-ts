@@ -1,14 +1,18 @@
 import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
 import {collection, getDocs} from "firebase/firestore";
 import {db} from '../../firebase';
-import { doc, getDoc } from "firebase/firestore";
+import {doc, getDoc} from "firebase/firestore";
 
 import exp from "constants";
 
-// Define the Quiz type
+export type Question = {
+    options: Array<any>,
+    question: string
+}
+
 export interface QuizType {
     id: string;
-    questions: []
+    questions: Question[]
     title: string,
     user: string
 }
@@ -20,7 +24,6 @@ interface QuizzesState {
     currentQuiz: QuizType | null
 }
 
-// Thunk for fetching quizzes from Firestore
 export const fetchQuizzes = createAsyncThunk<QuizType[], void, { rejectValue: string }>(
     'quizzes/fetchQuizzes',
     async (_, thunkAPI) => {
@@ -30,10 +33,9 @@ export const fetchQuizzes = createAsyncThunk<QuizType[], void, { rejectValue: st
             const quizzesList = quizzesSnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data(),
-            })) as QuizType[]; // Explicitly cast the data to Quiz[]
+            })) as QuizType[];
             return quizzesList;
         } catch (error) {
-            // Type guard for error
             if (error instanceof Error) {
                 return thunkAPI.rejectWithValue(error.message);
             } else {
@@ -45,9 +47,8 @@ export const fetchQuizzes = createAsyncThunk<QuizType[], void, { rejectValue: st
 
 export const fetchQuizById = async (docId: string) => {
     try {
-        const docRef = doc(db,"quiz" , docId); // Reference the document
-        const docSnap = await getDoc(docRef);         // Fetch the document
-
+        const docRef = doc(db, "quiz", docId);
+        const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             console.log("Document data:", docSnap.data());
             console.log(docSnap.data())
@@ -75,7 +76,7 @@ export const QuizzesSlice = createSlice({
         setQuizzes: (state, action: PayloadAction<QuizType[]>) => {
             state.quizzes = action.payload;
         },
-        setCurrentQuiz: (state, action: PayloadAction<QuizType>) =>{
+        setCurrentQuiz: (state, action: PayloadAction<QuizType>) => {
             state.currentQuiz = action.payload
         }
     },
@@ -97,5 +98,5 @@ export const QuizzesSlice = createSlice({
     },
 });
 
-export const {setQuizzes} = QuizzesSlice.actions;
+export const {setQuizzes, setCurrentQuiz} = QuizzesSlice.actions;
 export default QuizzesSlice.reducer;
