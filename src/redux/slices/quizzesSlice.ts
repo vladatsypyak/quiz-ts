@@ -17,6 +17,7 @@ interface QuizzesState {
     quizzes: QuizType[];
     loading: boolean;
     error: string | null;
+    currentQuiz: QuizType | null
 }
 
 // Thunk for fetching quizzes from Firestore
@@ -64,6 +65,7 @@ const initialState: QuizzesState = {
     quizzes: [],
     loading: false,
     error: null,
+    currentQuiz: null
 };
 
 export const QuizzesSlice = createSlice({
@@ -73,6 +75,9 @@ export const QuizzesSlice = createSlice({
         setQuizzes: (state, action: PayloadAction<QuizType[]>) => {
             state.quizzes = action.payload;
         },
+        setCurrentQuiz: (state, action: PayloadAction<QuizType>) =>{
+            state.currentQuiz = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder
