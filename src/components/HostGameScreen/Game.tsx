@@ -1,8 +1,6 @@
-import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
-import s from "./quizTemplate.module.scss"
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {fetchQuizById} from "../../redux/slices/quizzesSlice";
-import {doc, DocumentData, onSnapshot} from "firebase/firestore";
+import {doc, onSnapshot} from "firebase/firestore";
 import {db} from "../../firebase";
 import {GameData} from "./PlayersWaitingScreen";
 import {useSelector} from "react-redux";
