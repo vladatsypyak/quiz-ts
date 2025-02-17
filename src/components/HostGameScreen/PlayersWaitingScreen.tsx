@@ -13,6 +13,7 @@ import {QuizType, setCurrentQuiz} from "../../redux/slices/quizzesSlice";
     joinedAt: Date;
 }
 export type GameData = {
+    status: "waiting" | "active";
     quizId: string,
     players: Player[],
     gameCode: string

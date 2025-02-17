@@ -14,6 +14,7 @@ import FullQuiz from "./components/Home/UserQuizes/FullQuiz";
 import PlayersWaitingScreen from "./components/HostGameScreen/PlayersWaitingScreen";
 import JoinGameScreen from "./components/Player/JoinGameScreen";
 import Game from "./components/HostGameScreen/Game";
+import InGameScreen from "./components/Player/InGameScreen";
 
 
 const useTypedSelector: TypedUseSelectorHook<any> = useSelector;
@@ -54,6 +55,8 @@ function App() {
                 <Route path={"/host/game/:gameId"} element={<Game/>}/>
 
                 <Route path={"/player/firstScreen"} element={<JoinGameScreen/>}/>
+                <Route path={"/player/inGame/:gameId"} element={<InGameScreen/>}/>
+
 
 
             </Routes>

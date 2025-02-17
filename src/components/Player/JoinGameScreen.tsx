@@ -1,10 +1,16 @@
 import React, {useState} from "react";
 import {updateDoc, arrayUnion, collection, query, where, getDocs} from "firebase/firestore";
 import {db} from "../../firebase"
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
+import {useNavigate, useParams} from "react-router-dom";
+import {GameData} from "../HostGameScreen/PlayersWaitingScreen";
 
 const JoinGameScreen = () => {
     const [code, setCode] = useState("")
     const [name, setName] = useState("")
+    const navigate = useNavigate()
+
 
     const joinGame = async (gameCode: string, playerName: string): Promise<void> => {
         try {
@@ -20,6 +26,7 @@ const JoinGameScreen = () => {
 
             const gameDoc = querySnapshot.docs[0];
             const gameData = gameDoc.data();
+            console.log(gameDoc.id)
 
             if (gameData?.status !== "waiting") {
                 console.error("This game is not accepting players anymore.");
@@ -36,6 +43,7 @@ const JoinGameScreen = () => {
             });
 
             console.log(`Player "${playerName}" successfully joined the game with code "${gameCode}".`);
+            navigate(`/player/inGame/${gameDoc.id}`)
         } catch (error) {
             console.error("Error joining the game:", error);
         }
@@ -44,9 +52,9 @@ const JoinGameScreen = () => {
     return (
         <div>
             <input placeholder={"Введіть код"} onChange={(e) => setCode(e.target.value)} type="text"/>
-            <input  placeholder={"Введіть ім'я"} onChange={(e) => setName(e.target.value)} type="text"/>
+            <input placeholder={"Введіть ім'я"} onChange={(e) => setName(e.target.value)} type="text"/>
 
-            <button onClick={()=>joinGame(code, name)}>Enter</button>
+            <button onClick={() => joinGame(code, name)}>Enter</button>
         </div>
     )
 }
