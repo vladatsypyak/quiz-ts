@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import {fetchQuizById} from "../../redux/slices/quizzesSlice";
 import {doc, DocumentData, onSnapshot} from "firebase/firestore";
 import {db} from "../../firebase";
-import {GameData} from "./InitialScreen";
+import {GameData} from "./PlayersWaitingScreen";
 import {useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
 

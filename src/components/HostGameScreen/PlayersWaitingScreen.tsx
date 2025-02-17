@@ -17,7 +17,7 @@ export type GameData = {
     players: Player[],
     gameCode: string
 }
-const InitialScreen = () => {
+const PlayersWaitingScreen = () => {
     const dispatch = useDispatch()
     const { gameId } = useParams();
     const navigate = useNavigate()
@@ -83,4 +83,4 @@ const InitialScreen = () => {
     );
 };
 
-export default InitialScreen
+export default PlayersWaitingScreen

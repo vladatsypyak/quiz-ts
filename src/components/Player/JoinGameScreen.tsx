@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {updateDoc, arrayUnion, collection, query, where, getDocs} from "firebase/firestore";
 import {db} from "../../firebase"
 
-const FirstScreen = () => {
+const JoinGameScreen = () => {
     const [code, setCode] = useState("")
     const [name, setName] = useState("")
 
@@ -50,4 +50,4 @@ const FirstScreen = () => {
         </div>
     )
 }
-export default FirstScreen
+export default JoinGameScreen

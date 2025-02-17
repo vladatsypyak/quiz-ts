@@ -11,8 +11,8 @@ import {getAuth, onAuthStateChanged} from "firebase/auth";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import Home from "./components/Home/Home";
 import FullQuiz from "./components/Home/UserQuizes/FullQuiz";
-import InitialScreen from "./components/HostGameScreen/InitialScreen";
-import FirstScreen from "./components/Player/FirstScreen";
+import PlayersWaitingScreen from "./components/HostGameScreen/PlayersWaitingScreen";
+import JoinGameScreen from "./components/Player/JoinGameScreen";
 import Game from "./components/HostGameScreen/Game";
 
 
@@ -50,10 +50,10 @@ function App() {
                 <Route path={"/signup"} element={<SignUp/>}/>
                 <Route path={"/signin"} element={<Login/>}/>
                 <Route path={"/create-quiz"} element={<CreateQuiz/>}/>
-                <Route path={"/host/initial-screen/:gameId"} element={<InitialScreen/>}/>
+                <Route path={"/host/initial-screen/:gameId"} element={<PlayersWaitingScreen/>}/>
                 <Route path={"/host/game/:gameId"} element={<Game/>}/>
 
-                <Route path={"/player/firstScreen"} element={<FirstScreen/>}/>
+                <Route path={"/player/firstScreen"} element={<JoinGameScreen/>}/>
 
 
             </Routes>
