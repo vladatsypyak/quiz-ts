@@ -14,6 +14,9 @@ const InGameScreen = () => {
 
     const [gameData, setGameData] = useState<GameData | null>(null)
     const [isActive, setIsActive] = useState(false)
+
+    const playerName = localStorage.getItem("playerName")
+    console.log(playerName)
     useEffect(() => {
         const getGameInfo = async () => {
             if (!gameId) return;
@@ -46,6 +49,8 @@ const InGameScreen = () => {
     return (
         <div>
             {!isActive && <p>waiting for others...</p>}
+            {isActive && <p>active</p>}
+
         </div>
     )
 }
