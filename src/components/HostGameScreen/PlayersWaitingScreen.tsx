@@ -1,14 +1,12 @@
-import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
-import s from "./quizTemplate.module.scss"
+import React, { useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 
-import {doc, onSnapshot, getDoc, updateDoc, arrayUnion, collection, query, where, getDocs} from "firebase/firestore";
+import {doc, onSnapshot, getDoc, updateDoc} from "firebase/firestore";
 import {db} from "../../firebase"
 import {useDispatch} from "react-redux";
 import {QuizType, setCurrentQuiz} from "../../redux/slices/quizzesSlice";
 
-// @ts-ignore
- interface Player {
+export interface Player {
     name: string;
     joinedAt: Date;
 }
@@ -24,32 +22,32 @@ const PlayersWaitingScreen = () => {
     const navigate = useNavigate()
     const [gameData, setGameData] = useState<GameData | null>(null);
 
+
     useEffect(() => {
         const getGameInfo = async () => {
             if (!gameId) return;
+            const gameRef = doc(db, "games", gameId);
 
             try {
-                const gameRef = doc(db, "games", gameId);
 
                 const unsubscribe = onSnapshot(gameRef, async(gameSnapshot) => {
                     if (gameSnapshot.exists()) {
                         const gameData = gameSnapshot.data() as GameData;
-                        console.log(gameData.players)
                         if (!Array.isArray(gameData.players)) {
                             gameData.players = [];
                         }
                         setGameData(gameData);
-                        console.log(gameSnapshot.data().quizId)
-                        const quizRef = doc(db, "quiz", gameSnapshot.data().quizId);
-                        const quizSnapshot = await getDoc(quizRef);
-                        const quizData = { id: quizSnapshot.id, ...quizSnapshot.data() } as QuizType;
-                        console.log(quizData)
 
-                        if (quizData) {
-                            dispatch(setCurrentQuiz(quizData)) // Зберігаємо в Redux
+                        const quizRef = doc(db, "quiz", gameData.quizId);
+                        const quizSnapshot = await getDoc(quizRef);
+
+
+                        if (quizSnapshot.exists()) {
+                            const quizData = { id: quizSnapshot.id, ...quizSnapshot.data() } as QuizType;
+                            dispatch(setCurrentQuiz(quizData))
                         }
                     } else {
-                        console.error("No such game document!");
+                        console.error("No such game document");
                     }
                 });
 
@@ -63,8 +61,17 @@ const PlayersWaitingScreen = () => {
 
     }, [gameId]);
 
-    const onStartGameClick = () => {
-        navigate(`/host/game/${gameId}`)
+    const onStartGameClick = async () => {
+        if(!gameId) return
+        const gameRef = doc(db, "games", gameId);
+        try {
+            await updateDoc(gameRef, { status: "active" });
+
+            navigate(`/host/game/${gameId}`);
+        } catch (error) {
+            console.error("Error starting the game:", error);
+        }
+
     }
 
     return (
