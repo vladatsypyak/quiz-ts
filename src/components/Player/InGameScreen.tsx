@@ -13,9 +13,10 @@ const InGameScreen = () => {
     const {gameId} = useParams()
 
     const [gameData, setGameData] = useState<GameData | null>(null)
+    console.log(gameData)
     const [quizData, setQuizData] = useState<QuizType| null>(null)
     const [isActive, setIsActive] = useState(false)
-    const playerName = localStorage.getItem("playerName")
+    const playerName = sessionStorage.getItem("playerName")
     useEffect(() => {
         const getGameInfo = async () => {
             if (!gameId) return;
@@ -64,7 +65,8 @@ const InGameScreen = () => {
             {isActive &&
                 <div>
                     <p>active</p>
-                <QuizOptions quiz={quizData}/>
+                    <p>{playerName}</p>
+                <QuizOptions quiz={quizData} currentQuestion={gameData?.currentQuestion || 0}/>
                 </div>
             }
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {doc, onSnapshot} from "firebase/firestore";
+import {doc, onSnapshot, updateDoc} from "firebase/firestore";
 import {db} from "../../firebase";
 import {GameData} from "./PlayersWaitingScreen";
 import {useSelector} from "react-redux";
@@ -11,11 +11,28 @@ const Game = () => {
     const {gameId} = useParams()
     const quiz = useSelector((store: RootState) => store.quizzesSlice.currentQuiz)
 
-    console.log(gameId)
     const [roundNumber, setRoundNumber] = useState(0)
 
     // const [quiz, setQuiz] = useState<DocumentData | null>(null)
     const [gameData, setGameData] = useState<GameData | null>(null)
+
+    const totalQuestionsNum = quiz?.questions.length || 0
+
+    const onNextRoundClick = async () => {
+        if(roundNumber === totalQuestionsNum - 1) {
+            alert("quiz end")
+            return
+        }
+        setRoundNumber(roundNumber + 1)
+        console.log("mkldnf")
+        console.log(roundNumber)
+        if (!gameId) return
+        const gameRef = doc(db, "games", gameId);
+        await updateDoc(gameRef, {
+            currentQuestion: roundNumber + 1
+        })
+
+    }
 
     useEffect(() => {
         const getGameInfo = async () => {
@@ -48,7 +65,6 @@ const Game = () => {
     }, [gameId]);
 
 
-
     return (
         <div>
             {quiz && <div>
@@ -65,7 +81,7 @@ const Game = () => {
             {gameData && <p>Players: {gameData.players.map(player => <p>{player.name}</p>)}</p>
             }
 
-            <button onClick={() => setRoundNumber(roundNumber + 1)}>next</button>
+            <button onClick={onNextRoundClick}>next</button>
         </div>
 
     )

@@ -42,8 +42,7 @@ const JoinGameScreen = () => {
                 players: arrayUnion(player),
             });
 
-            console.log(`Player "${playerName}" successfully joined the game with code "${gameCode}".`);
-            localStorage.setItem("playerName", playerName);
+            sessionStorage.setItem("playerName", playerName);
 
             navigate(`/player/inGame/${gameDoc.id}`)
         } catch (error) {
