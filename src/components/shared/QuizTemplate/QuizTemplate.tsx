@@ -5,7 +5,8 @@ import Option from "../../CreateQuiz/Option/Option";
 
 type Option = {
     text: string,
-    image: string
+    image: string,
+    isCorrect: Boolean
 }
 
 type HandleOptionChangeParams = {
@@ -65,7 +66,7 @@ const handleAddQuestionBtn = (e: any) => {
     e.preventDefault()
     const newQuizData = [...quizData, {
         question: "",
-        options: [{text: "", image: ""}, {text: "", image: ""}, {text: "", image: ""}, {text: "", image: ""}]
+        options: [{text: "", image: "", isCorrect: false}, {text: "", image: "", isCorrect: false}, {text: "", image: "", isCorrect: false}, {text: "", image: "", isCorrect: false}]
     }]
     setQuizData(newQuizData)
 }
@@ -92,6 +93,7 @@ const handleAddQuestionBtn = (e: any) => {
                                            value={option.text}
                                             image={option.image}
                                             optionIndex={el.options.indexOf(option)}
+                                            isCorrect={option.isCorrect}
                                             index={index}/>
                                 </div>
                             })}

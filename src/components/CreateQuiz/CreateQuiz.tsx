@@ -13,7 +13,7 @@ import QuizTemplate from "../shared/QuizTemplate/QuizTemplate";
 const quizDataInitialSate = [
     {
         question: "",
-        options: [{text: "", image: ""}, {text: "", image: ""}, {text: "", image: ""}, {text: "", image: ""}]
+        options: [{text: "", image: "", isCorrect: false}, {text: "", image: "", isCorrect: false}, {text: "", image: "", isCorrect: false}, {text: "", image: "", isCorrect: false}]
     }
 ]
 

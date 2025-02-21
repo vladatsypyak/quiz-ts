@@ -16,11 +16,12 @@ type OptionProps = {
     handleOptionChange: any,
     optionIndex: number,
     value: string | null,
-    image: string
+    image: string,
+    isCorrect: Boolean
 }
 
-const Option = ({index, optionIndex, handleOptionChange, value, image}: OptionProps) => {
-    const [isCorrect, setCorrect] = useState(false)
+const Option = ({index, optionIndex, handleOptionChange, value, image, isCorrect}: OptionProps) => {
+    // const [isCorrect, setCorrect] = useState(false)
     const crossImg = <FontAwesomeIcon icon={faX} style={{color: "#d21919",}}/>
     const checkImg = <FontAwesomeIcon icon={faCheck} style={{color: "#1eb83d",}}/>
     const btnImage = isCorrect ? checkImg : crossImg
@@ -56,7 +57,9 @@ const Option = ({index, optionIndex, handleOptionChange, value, image}: OptionPr
 
     const onBtnClick = (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        setCorrect(!isCorrect)
+        handleOptionChange({index, optionIndex, field: "isCorrect", value: !isCorrect})
+        // setCorrect(!isCorrect)
+
     }
     return (
         <div className={s.option}>
