@@ -13,7 +13,6 @@ const InGameScreen = () => {
     const {gameId} = useParams()
 
     const [gameData, setGameData] = useState<GameData | null>(null)
-    console.log(gameData)
     const [quizData, setQuizData] = useState<QuizType| null>(null)
     const [isActive, setIsActive] = useState(false)
     const playerName = sessionStorage.getItem("playerName")
@@ -57,7 +56,34 @@ const InGameScreen = () => {
             }
         });
     }, [gameData]);
-    console.log(quizData)
+
+    const onSelectAnswer  = async (optionIndex: number, isCorrect: Boolean) => {
+        if(!gameId || !playerName) return
+        const currentQuestion = gameData?.currentQuestion || 0
+        const newResults = gameData && Array.isArray(gameData.results) ? [...gameData.results] : [];
+
+        if(!newResults[currentQuestion]){
+            newResults[currentQuestion] = {}
+        }
+
+        if(!newResults[currentQuestion][optionIndex]){
+            newResults[currentQuestion][optionIndex] = [];
+        }
+        newResults[currentQuestion][optionIndex].push(playerName)
+        const newPlayerStats = {...gameData?.playerStats}
+        if(!newPlayerStats[playerName]){
+            newPlayerStats[playerName] = {correct: 0}
+        }
+        if (isCorrect) {
+            newPlayerStats[playerName].correct += 1;
+        }
+        const gameRef = doc(db, "games", gameId);
+
+        await updateDoc(gameRef, {
+            results: newResults,
+            playerStats: newPlayerStats
+        })
+    }
 
     return (
         <div>
@@ -66,7 +92,7 @@ const InGameScreen = () => {
                 <div>
                     <p>active</p>
                     <p>{playerName}</p>
-                <QuizOptions quiz={quizData} currentQuestion={gameData?.currentQuestion || 0}/>
+                <QuizOptions onSelectAnswer={onSelectAnswer} quiz={quizData} currentQuestion={gameData?.currentQuestion || 0}/>
                 </div>
             }
 

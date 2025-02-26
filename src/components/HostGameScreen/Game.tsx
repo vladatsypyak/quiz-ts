@@ -24,7 +24,6 @@ const Game = () => {
             return
         }
         setRoundNumber(roundNumber + 1)
-        console.log("mkldnf")
         console.log(roundNumber)
         if (!gameId) return
         const gameRef = doc(db, "games", gameId);
