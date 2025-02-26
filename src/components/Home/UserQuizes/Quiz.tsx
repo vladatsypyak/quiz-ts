@@ -29,7 +29,8 @@ const Quiz = ({quiz}: { quiz: QuizType }) => {
                 results: [],
                 currentQuestion: 0,
                 createdAt: new Date(),
-                playerStats: []
+                playerStats: [],
+                playersAnswered: 0
             } as GameData);
 
             console.log("Game code for players to join:", gameCode);

@@ -13,8 +13,9 @@ const InGameScreen = () => {
     const {gameId} = useParams()
 
     const [gameData, setGameData] = useState<GameData | null>(null)
-    const [quizData, setQuizData] = useState<QuizType| null>(null)
+    const [quizData, setQuizData] = useState<QuizType | null>(null)
     const [isActive, setIsActive] = useState(false)
+
     const playerName = sessionStorage.getItem("playerName")
     useEffect(() => {
         const getGameInfo = async () => {
@@ -57,31 +58,38 @@ const InGameScreen = () => {
         });
     }, [gameData]);
 
-    const onSelectAnswer  = async (optionIndex: number, isCorrect: Boolean) => {
-        if(!gameId || !playerName) return
-        const currentQuestion = gameData?.currentQuestion || 0
+    const onSelectAnswer = async (optionIndex: number, isCorrect: Boolean) => {
+        if (!gameId || !playerName || !gameData) return
+
+        const currentQuestion = gameData.currentQuestion || 0
         const newResults = gameData && Array.isArray(gameData.results) ? [...gameData.results] : [];
 
-        if(!newResults[currentQuestion]){
+        if (!newResults[currentQuestion]) {
             newResults[currentQuestion] = {}
         }
 
-        if(!newResults[currentQuestion][optionIndex]){
+        if (!newResults[currentQuestion][optionIndex]) {
             newResults[currentQuestion][optionIndex] = [];
+        }
+        if(Object.values(newResults[currentQuestion]).some((el: any) => el.includes(playerName))) {
+            console.log("already answered")
+            return
         }
         newResults[currentQuestion][optionIndex].push(playerName)
         const newPlayerStats = {...gameData?.playerStats}
-        if(!newPlayerStats[playerName]){
+        if (!newPlayerStats[playerName]) {
             newPlayerStats[playerName] = {correct: 0}
         }
         if (isCorrect) {
             newPlayerStats[playerName].correct += 1;
         }
+
         const gameRef = doc(db, "games", gameId);
 
         await updateDoc(gameRef, {
             results: newResults,
-            playerStats: newPlayerStats
+            playerStats: newPlayerStats,
+            playersAnswered: gameData.playersAnswered + 1
         })
     }
 
@@ -92,7 +100,8 @@ const InGameScreen = () => {
                 <div>
                     <p>active</p>
                     <p>{playerName}</p>
-                <QuizOptions onSelectAnswer={onSelectAnswer} quiz={quizData} currentQuestion={gameData?.currentQuestion || 0}/>
+                    <QuizOptions onSelectAnswer={onSelectAnswer} quiz={quizData}
+                                 currentQuestion={gameData?.currentQuestion || 0}/>
                 </div>
             }
 

@@ -17,7 +17,8 @@ export type GameData = {
     gameCode: string,
     currentQuestion: number,
     results: any,
-    playerStats: any
+    playerStats: any,
+    playersAnswered: number
 }
 const PlayersWaitingScreen = () => {
     const dispatch = useDispatch()
