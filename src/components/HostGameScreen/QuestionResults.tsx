@@ -3,15 +3,33 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
 
 
-const QuestionResults = ({gameData}: { gameData: any }) => {
+const QuestionResults = ({gameData, onNextRoundClick}: { gameData: any, onNextRoundClick: any }) => {
     const currentGameData = useSelector((state: RootState) => state.quizzesSlice.currentGameData)
     const quiz = useSelector((store: RootState) => store.quizzesSlice.currentQuiz)
 
     if (!currentGameData) return null
-    if (currentGameData.results.length == 0) {
-        return null
-    }
     const roundNumber = currentGameData.currentQuestion
+
+    if (currentGameData.results.length == 0) {
+        return (
+            <div>
+                {quiz && <div>
+                    <p>{quiz.questions[roundNumber].question}</p>
+                    {quiz.questions[roundNumber].options.map((option: any, index) => {
+                        return (
+                            <div>
+                                <p>{option.text}</p>
+                                <p>{0}</p>
+                                <img src={option.image} alt=""/>
+                            </div>
+                        )
+                    })}
+                    <button onClick={onNextRoundClick}>next round</button>
+
+                </div>}
+            </div>
+        )
+    }
 
 
     const getNumberOfChosenOption = (optionNumber: number) => {
@@ -44,6 +62,8 @@ const QuestionResults = ({gameData}: { gameData: any }) => {
                         </div>
                     )
                 })}
+                <button onClick={onNextRoundClick}>next round</button>
+
             </div>}
         </div>
 

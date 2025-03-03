@@ -21,20 +21,8 @@ const Game = () => {
 
     const totalQuestionsNum = quiz?.questions.length || 0
 
-    const onNextRoundClick = async () => {
-        if(roundNumber === totalQuestionsNum - 1) {
-            alert("quiz end")
-            return
-        }
-        setRoundNumber(roundNumber + 1)
-        if (!gameId) return
-        const gameRef = doc(db, "games", gameId);
-        await updateDoc(gameRef, {
-            currentQuestion: roundNumber + 1,
-            playersAnswered: 0
-        })
+    const [showRoundResults, setShowRoundResults] = useState(false)
 
-    }
 
     useEffect(() => {
         const getGameInfo = async () => {
@@ -75,10 +63,29 @@ const Game = () => {
 
     }, [gameId]);
 
+    const onNextRoundClick = async () => {
+        if (roundNumber === totalQuestionsNum - 1) {
+            alert("quiz end")
+            return
+        }
+        setShowRoundResults(false)
 
+        setRoundNumber(roundNumber + 1)
+        if (!gameId) return
+        const gameRef = doc(db, "games", gameId);
+        await updateDoc(gameRef, {
+            currentQuestion: roundNumber + 1,
+            playersAnswered: 0
+        })
+
+    }
+
+    const onShowRoundResults = () => {
+        setShowRoundResults(true)
+    }
     return (
         <div>
-            {quiz && <div>
+            {quiz && !showRoundResults && <div>
                 <p>{quiz.questions[roundNumber].question}</p>
                 {quiz.questions[roundNumber].options.map((option: any) => {
                     return (
@@ -88,13 +95,17 @@ const Game = () => {
                         </div>
                     )
                 })}
+                <button onClick={onShowRoundResults}>next</button>
             </div>}
             {gameData && <p>Players: {gameData.players.map(player => <p>{player.name}</p>)}</p>
             }
 
-            <button onClick={onNextRoundClick}>next</button>
+
             <p>----------------</p>
-            <QuestionResults gameData={gameData}/>
+
+            {quiz && showRoundResults && <QuestionResults onNextRoundClick={onNextRoundClick} gameData={gameData}/>}
+
+
         </div>
 
     )
