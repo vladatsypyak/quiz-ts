@@ -1,14 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {doc, onSnapshot, updateDoc} from "firebase/firestore";
+import {doc, getDoc, onSnapshot, updateDoc} from "firebase/firestore";
 import {db} from "../../firebase";
 import {GameData} from "./PlayersWaitingScreen";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
+import {QuizType, setCurrentGameData, setCurrentQuiz} from "../../redux/slices/quizzesSlice";
+import QuestionResults from "./QuestionResults";
 
 
 const Game = () => {
     const {gameId} = useParams()
+    const dispatch = useDispatch()
     const quiz = useSelector((store: RootState) => store.quizzesSlice.currentQuiz)
 
     const [roundNumber, setRoundNumber] = useState(0)
@@ -24,11 +27,11 @@ const Game = () => {
             return
         }
         setRoundNumber(roundNumber + 1)
-        console.log(roundNumber)
         if (!gameId) return
         const gameRef = doc(db, "games", gameId);
         await updateDoc(gameRef, {
-            currentQuestion: roundNumber + 1
+            currentQuestion: roundNumber + 1,
+            playersAnswered: 0
         })
 
     }
@@ -40,7 +43,7 @@ const Game = () => {
             try {
                 const gameRef = doc(db, "games", gameId);
 
-                const unsubscribe = onSnapshot(gameRef, (gameSnapshot) => {
+                const unsubscribe = onSnapshot(gameRef, async (gameSnapshot) => {
                     if (gameSnapshot.exists()) {
                         const gameData = gameSnapshot.data() as GameData;
                         console.log(gameData.players)
@@ -48,6 +51,15 @@ const Game = () => {
                             gameData.players = [];
                         }
                         setGameData(gameData);
+                        dispatch(setCurrentGameData(gameData))
+                        const quizRef = doc(db, "quiz", gameData.quizId);
+                        const quizSnapshot = await getDoc(quizRef);
+
+
+                        if (quizSnapshot.exists()) {
+                            const quizData = {id: quizSnapshot.id, ...quizSnapshot.data()} as QuizType;
+                            dispatch(setCurrentQuiz(quizData))
+                        }
                     } else {
                         console.error("No such game document!");
                     }
@@ -81,6 +93,8 @@ const Game = () => {
             }
 
             <button onClick={onNextRoundClick}>next</button>
+            <p>----------------</p>
+            <QuestionResults gameData={gameData}/>
         </div>
 
     )

@@ -42,14 +42,6 @@ const PlayersWaitingScreen = () => {
                         }
                         setGameData(gameData);
 
-                        const quizRef = doc(db, "quiz", gameData.quizId);
-                        const quizSnapshot = await getDoc(quizRef);
-
-
-                        if (quizSnapshot.exists()) {
-                            const quizData = { id: quizSnapshot.id, ...quizSnapshot.data() } as QuizType;
-                            dispatch(setCurrentQuiz(quizData))
-                        }
                     } else {
                         console.error("No such game document");
                     }
@@ -63,7 +55,7 @@ const PlayersWaitingScreen = () => {
 
         getGameInfo();
 
-    }, [gameId]);
+    }, [gameId, gameData]);
 
     const onStartGameClick = async () => {
         if(!gameId) return

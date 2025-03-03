@@ -4,6 +4,7 @@ import {db} from '../../firebase';
 import {doc, getDoc} from "firebase/firestore";
 
 import exp from "constants";
+import {GameData} from "../../components/HostGameScreen/PlayersWaitingScreen";
 
 export type Question = {
     options: Array<any>,
@@ -21,7 +22,8 @@ interface QuizzesState {
     quizzes: QuizType[];
     loading: boolean;
     error: string | null;
-    currentQuiz: QuizType | null
+    currentQuiz: QuizType | null,
+    currentGameData: GameData | null
 }
 
 export const fetchQuizzes = createAsyncThunk<QuizType[], void, { rejectValue: string }>(
@@ -66,7 +68,8 @@ const initialState: QuizzesState = {
     quizzes: [],
     loading: false,
     error: null,
-    currentQuiz: null
+    currentQuiz: null,
+    currentGameData: null
 };
 
 export const QuizzesSlice = createSlice({
@@ -78,6 +81,9 @@ export const QuizzesSlice = createSlice({
         },
         setCurrentQuiz: (state, action: PayloadAction<QuizType>) => {
             state.currentQuiz = action.payload
+        },
+        setCurrentGameData: (state, action: PayloadAction<GameData>) =>{
+            state.currentGameData = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -98,5 +104,5 @@ export const QuizzesSlice = createSlice({
     },
 });
 
-export const {setQuizzes, setCurrentQuiz} = QuizzesSlice.actions;
+export const {setQuizzes, setCurrentQuiz, setCurrentGameData} = QuizzesSlice.actions;
 export default QuizzesSlice.reducer;
