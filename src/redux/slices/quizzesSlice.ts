@@ -4,7 +4,7 @@ import {db} from '../../firebase';
 import {doc, getDoc} from "firebase/firestore";
 
 import exp from "constants";
-import {GameData} from "../../components/HostGameScreen/PlayersWaitingScreen";
+import {GameData} from "../../components/HostGameScreen/PlayersWaitingScreen/PlayersWaitingScreen";
 
 export type Question = {
     options: Array<any>,

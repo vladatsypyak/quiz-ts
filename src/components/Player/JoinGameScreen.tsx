@@ -4,7 +4,7 @@ import {db} from "../../firebase"
 import {useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
 import {useNavigate, useParams} from "react-router-dom";
-import {GameData} from "../HostGameScreen/PlayersWaitingScreen";
+import {GameData} from "../HostGameScreen/PlayersWaitingScreen/PlayersWaitingScreen";
 
 const JoinGameScreen = () => {
     const [code, setCode] = useState("")

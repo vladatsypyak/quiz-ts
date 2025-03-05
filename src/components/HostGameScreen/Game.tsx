@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {doc, getDoc, onSnapshot, updateDoc} from "firebase/firestore";
 import {db} from "../../firebase";
-import {GameData} from "./PlayersWaitingScreen";
+import {GameData} from "./PlayersWaitingScreen/PlayersWaitingScreen";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
 import {QuizType, setCurrentGameData, setCurrentQuiz} from "../../redux/slices/quizzesSlice";

@@ -6,7 +6,7 @@ import {RootState} from "../../../redux/store";
 import {QuizType} from "../../../redux/slices/quizzesSlice";
 import {db} from "../../../firebase";
 import {addDoc, doc, setDoc, collection} from "firebase/firestore";
-import {GameData} from "../../HostGameScreen/PlayersWaitingScreen";
+import {GameData} from "../../HostGameScreen/PlayersWaitingScreen/PlayersWaitingScreen";
 
 
 const Quiz = ({quiz}: { quiz: QuizType }) => {
