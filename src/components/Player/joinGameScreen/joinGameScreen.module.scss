@@ -1,0 +1,32 @@
+@import "../../../variables.module";
+
+.wrapper{
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 60px 30px 30px;
+
+  input{
+    display: block;
+    padding: 15px;
+    border: 1px solid #AA73C5;
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    font-size: 21px;
+  }
+}
+
+
+.join_btn{
+  width: 100%;
+  background-color: #85348C;
+  border-radius: 10px;
+  padding: 15px;
+  color: white;
+  font-size: 21px;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+
+}

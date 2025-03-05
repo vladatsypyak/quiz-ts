@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {updateDoc, arrayUnion, collection, query, where, getDocs} from "firebase/firestore";
-import {db} from "../../firebase"
+import {db} from "../../../firebase"
 import {useSelector} from "react-redux";
-import {RootState} from "../../redux/store";
+import {RootState} from "../../../redux/store";
 import {useNavigate, useParams} from "react-router-dom";
-import {GameData} from "../HostGameScreen/PlayersWaitingScreen/PlayersWaitingScreen";
-
+import {GameData} from "../../HostGameScreen/PlayersWaitingScreen/PlayersWaitingScreen";
+import s from "./joinGameScreen.module.scss"
 const JoinGameScreen = () => {
     const [code, setCode] = useState("")
     const [name, setName] = useState("")
@@ -51,11 +51,11 @@ const JoinGameScreen = () => {
     };
 
     return (
-        <div>
+        <div className={s.wrapper}>
             <input placeholder={"Введіть код"} onChange={(e) => setCode(e.target.value)} type="text"/>
             <input placeholder={"Введіть ім'я"} onChange={(e) => setName(e.target.value)} type="text"/>
 
-            <button onClick={() => joinGame(code, name)}>Enter</button>
+            <button className={s.join_btn} onClick={() => joinGame(code, name)}>Enter</button>
         </div>
     )
 }
