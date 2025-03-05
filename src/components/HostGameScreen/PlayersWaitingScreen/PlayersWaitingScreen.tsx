@@ -2,9 +2,10 @@ import React, { useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 
 import {doc, onSnapshot, getDoc, updateDoc} from "firebase/firestore";
-import {db} from "../../firebase"
+import {db} from "../../../firebase"
 import {useDispatch} from "react-redux";
-import {QuizType, setCurrentQuiz} from "../../redux/slices/quizzesSlice";
+import {QuizType, setCurrentQuiz} from "../../../redux/slices/quizzesSlice";
+import s from "./playersWaitingScreen.module.scss"
 
 export interface Player {
     name: string;
@@ -71,15 +72,26 @@ const PlayersWaitingScreen = () => {
     }
 
     return (
-        <div>
+        <div className={"container"}>
             {gameData ? (
-                <>
-                    <p>Game Code: {gameData.gameCode}</p>
-                    <button onClick={onStartGameClick}>Start Game</button>
-                    {gameData.players.map((player, index) => (
-                        <p key={index}>{player.name}</p>
-                    ))}
-                </>
+                <div className={s.wrapper}>
+                   <div className={s.top_text_wrap}>
+                       <p className={s.text}>Код для приєднання: <span>{gameData.gameCode}</span></p>
+                       <p className={s.text}>Посилання: <a>https://play/quizler</a></p>
+                   </div>
+                    <div className={s.picture}>
+                        img
+                    </div>
+                   <div className={s.bottom_wrap}>
+                       <div className={s.players_wrap}>
+                           <p>Під’єднані гравці: </p>
+                           <p>{gameData.players.map((player) => player.name).join(", ")}</p>
+                       </div>
+                       <button className={s.start_btn} onClick={onStartGameClick}>Почати</button>
+
+                   </div>
+
+                </div>
             ) : (
                 <p>Loading game data...</p>
             )}
