@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {doc, getDoc, onSnapshot, updateDoc} from "firebase/firestore";
-import {db} from "../../firebase";
-import {GameData} from "./PlayersWaitingScreen/PlayersWaitingScreen";
+import {db} from "../../../../firebase";
+import {GameData} from "../PlayersWaitingScreen";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../redux/store";
-import {QuizType, setCurrentGameData, setCurrentQuiz} from "../../redux/slices/quizzesSlice";
-import QuestionResults from "./QuestionResults";
-
+import {RootState} from "../../../../redux/store";
+import {QuizType, setCurrentGameData, setCurrentQuiz} from "../../../../redux/slices/quizzesSlice";
+import QuestionResults from "../../QuestionResults/QuestionResults";
+import s from "./game.module.scss"
 
 const Game = () => {
     const {gameId} = useParams()
@@ -84,24 +84,27 @@ const Game = () => {
         setShowRoundResults(true)
     }
     return (
-        <div>
+        <div className={s.game_wrap}>
             {quiz && !showRoundResults && <div>
-                <p>{quiz.questions[roundNumber].question}</p>
-                {quiz.questions[roundNumber].options.map((option: any) => {
-                    return (
-                        <div>
-                            <p>{option.text}</p>
-                            <img src={option.image} alt=""/>
-                        </div>
-                    )
-                })}
-                <button onClick={onShowRoundResults}>next</button>
+                <div className={s.question_wrap}><p>{quiz.questions[roundNumber].question}</p></div>
+                <div>picture</div>
+                <div className={s.options}>
+                    {quiz.questions[roundNumber].options.map((option: any) => {
+                        return (
+                            <div className={s.option}>
+                                <p>{option.text}</p>
+                                {option.image ? <img src={option.image} alt=""/> : null}
+                            </div>
+                        )
+                    })}
+                </div>
+                <div className={s.bottom_wrap}>
+                    <p className={s.text}>Відповіли 3\3</p>
+                    <button className={s.btn} onClick={onShowRoundResults}>next</button>
+                </div>
             </div>}
-            {gameData && <p>Players: {gameData.players.map(player => <p>{player.name}</p>)}</p>
-            }
-
-
-            <p>----------------</p>
+            {/*{gameData && <p>Players: {gameData.players.map(player => <p>{player.name}</p>)}</p>*/}
+            {/*}*/}
 
             {quiz && showRoundResults && <QuestionResults onNextRoundClick={onNextRoundClick} gameData={gameData}/>}
 

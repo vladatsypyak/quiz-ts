@@ -13,7 +13,7 @@ import Home from "./components/Home/Home";
 import FullQuiz from "./components/Home/UserQuizes/FullQuiz";
 import PlayersWaitingScreen from "./components/HostGameScreen/PlayersWaitingScreen/PlayersWaitingScreen";
 import JoinGameScreen from "./components/Player/joinGameScreen/JoinGameScreen";
-import Game from "./components/HostGameScreen/Game";
+import Game from "./components/HostGameScreen/PlayersWaitingScreen/Game/Game";
 import InGameScreen from "./components/Player/InGameScreen";
 
 

@@ -5,7 +5,7 @@ import {useParams} from "react-router-dom";
 import {GameData} from "../HostGameScreen/PlayersWaitingScreen/PlayersWaitingScreen";
 import QuizOptions from "./QuizOptions/QuizOptions";
 import {QuizType} from "../../redux/slices/quizzesSlice";
-
+import s from "./inGameScreen.module.scss"
 const InGameScreen = () => {
 
     const {gameId} = useParams()
