@@ -13,6 +13,8 @@ const InGameScreen = () => {
     const [gameData, setGameData] = useState<GameData | null>(null)
     const [quizData, setQuizData] = useState<QuizType | null>(null)
     const [isActive, setIsActive] = useState(false)
+    const [isAnswered, setIsAnswered] = useState({isAnswered: false, index: 0})
+
 
     const playerName = sessionStorage.getItem("playerName")
     useEffect(() => {
@@ -43,6 +45,7 @@ const InGameScreen = () => {
 
         getGameInfo();
 
+
     }, [gameId]);
 
     useEffect(() => {
@@ -70,6 +73,7 @@ const InGameScreen = () => {
             newResults[currentQuestion][optionIndex] = [];
         }
         if(Object.values(newResults[currentQuestion]).some((el: any) => el.includes(playerName))) {
+            // setIsAnswered({isAnswered: true, index: optionIndex})
             console.log("already answered")
             return
         }
@@ -83,6 +87,7 @@ const InGameScreen = () => {
         }
 
         const gameRef = doc(db, "games", gameId);
+        setIsAnswered({isAnswered: true, index: optionIndex})
 
         await updateDoc(gameRef, {
             results: newResults,
@@ -96,7 +101,7 @@ const InGameScreen = () => {
             {!isActive && <p>waiting for others...</p>}
             {isActive &&
                 <div className={s.wrapper}>
-                    <QuizOptions onSelectAnswer={onSelectAnswer} quiz={quizData}
+                    <QuizOptions onSelectAnswer={onSelectAnswer} quiz={quizData} isAnswered={isAnswered}
                                  currentQuestion={gameData?.currentQuestion || 0}/>
                 </div>
             }
