@@ -21,7 +21,12 @@ const QuestionResults = ({gameData, onNextRoundClick}: { gameData: any, onNextRo
                             return (
                                 <div className={s.option}>
                                     <p>{option.text}</p>
+
+                                    <div style={{width: "50%"}} className={s.option_bg}>
+
+                                    </div>
                                     {option.image ? <img src={option.image} alt=""/> : null}
+
                                 </div>
                             )
                         })}
@@ -62,8 +67,9 @@ const QuestionResults = ({gameData, onNextRoundClick}: { gameData: any, onNextRo
                     {quiz.questions[roundNumber].options.map((option: any, index) => {
                         return (
                             <div className={s.option}>
-                                <p>{getNumberOfChosenOption(index)}</p>
-                                <p>{calculatePercent(index)}</p>
+                               <div style={{width: calculatePercent(index)}} className={s.option_bg}>
+
+                               </div>
                                 <p>{option.text}</p>
                                 {option.image ? <img src={option.image} alt=""/> : null}
                             </div>

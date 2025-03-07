@@ -1,4 +1,4 @@
-.wrapper{
+.wrapper {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
@@ -11,6 +11,7 @@
   flex-wrap: wrap;
   margin-bottom: 30px;
 }
+
 .question_wrap {
   background-color: #a972c4;
   color: white;
@@ -20,13 +21,31 @@
   width: 100%;
   margin-bottom: 30px;
 }
+
 .option {
   width: 45%;
-  background-color: #cdafdd;
-  padding: 20px;
   border-radius: 10px;
-  color: white;
+  color: black;
+  position: relative;
+  outline: 1px solid rgba(0, 0, 0, 0.41);
+  padding: 20px;
+
+
+  p {
+    position: relative;
+    z-index: 1;
+  }
+
+  .option_bg {
+    border-radius: 10px;
+    background-color: rgba(168, 113, 195, 0.62);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
 }
+
 .bottom_wrap {
   margin-top: auto;
   display: flex;
