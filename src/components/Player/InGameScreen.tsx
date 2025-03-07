@@ -95,9 +95,7 @@ const InGameScreen = () => {
         <div>
             {!isActive && <p>waiting for others...</p>}
             {isActive &&
-                <div>
-                    <p>active</p>
-                    <p>{playerName}</p>
+                <div className={s.wrapper}>
                     <QuizOptions onSelectAnswer={onSelectAnswer} quiz={quizData}
                                  currentQuestion={gameData?.currentQuestion || 0}/>
                 </div>
