@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {doc, getDoc, onSnapshot, updateDoc} from "firebase/firestore";
 import {db} from "../../../../firebase";
 import {GameData} from "../PlayersWaitingScreen";
@@ -22,6 +22,8 @@ const Game = () => {
     const totalQuestionsNum = quiz?.questions.length || 0
 
     const [showRoundResults, setShowRoundResults] = useState(false)
+
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -64,14 +66,18 @@ const Game = () => {
     }, [gameId]);
 
     const onNextRoundClick = async () => {
+
+
+        if (!gameId) {
+            return
+        }
         if (roundNumber === totalQuestionsNum - 1) {
-            alert("quiz end")
+            navigate(`/host/game/${gameId}/final-results`)
             return
         }
         setShowRoundResults(false)
 
         setRoundNumber(roundNumber + 1)
-        if (!gameId) return
         const gameRef = doc(db, "games", gameId);
         await updateDoc(gameRef, {
             currentQuestion: roundNumber + 1,

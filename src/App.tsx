@@ -15,6 +15,7 @@ import PlayersWaitingScreen from "./components/HostGameScreen/PlayersWaitingScre
 import JoinGameScreen from "./components/Player/joinGameScreen/JoinGameScreen";
 import Game from "./components/HostGameScreen/PlayersWaitingScreen/Game/Game";
 import InGameScreen from "./components/Player/InGameScreen";
+import FinalResults from "./components/HostGameScreen/FinalResults/FinalResults";
 
 
 const useTypedSelector: TypedUseSelectorHook<any> = useSelector;
@@ -53,6 +54,7 @@ function App() {
                 <Route path={"/create-quiz"} element={<CreateQuiz/>}/>
                 <Route path={"/host/lobby/:gameId"} element={<PlayersWaitingScreen/>}/>
                 <Route path={"/host/game/:gameId"} element={<Game/>}/>
+                <Route path={"/host/game/:gameId/final-results"} element={<FinalResults/>}/>
 
                 <Route path={"/player/firstScreen"} element={<JoinGameScreen/>}/>
                 <Route path={"/player/inGame/:gameId"} element={<InGameScreen/>}/>
