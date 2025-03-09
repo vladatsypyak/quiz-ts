@@ -31,6 +31,9 @@ const InGameScreen = () => {
                         if (gameData.status === "active") {
                             setIsActive(true)
                         }
+                        if (gameData.playersAnswered === 0) {
+                            setIsAnswered({isAnswered: false, index: 0})
+                        }
 
                     } else {
                         console.error("No such game document!");

@@ -99,7 +99,7 @@ const Game = () => {
                     })}
                 </div>
                 <div className={s.bottom_wrap}>
-                    <p className={s.text}>Відповіли 3\3</p>
+                    <p className={s.text}>Відповіли {gameData?.playersAnswered}\{gameData?.players.length}</p>
                     <button className={s.btn} onClick={onShowRoundResults}>next</button>
                 </div>
             </div>}

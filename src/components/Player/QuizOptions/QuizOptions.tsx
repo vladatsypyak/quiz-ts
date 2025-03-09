@@ -12,8 +12,8 @@ const QuizOptions = ({quiz, currentQuestion, onSelectAnswer, isAnswered}: { quiz
                 quiz?.questions[currentQuestion]?.options?.map((option, index) => {
                     const isCorrect = option.isCorrect
                     const isAnsweredStyle = isAnswered.isAnswered && isAnswered.index === index ? s.isAnswered : ""
-                    return <div className={`${s.option} ${isAnsweredStyle}`}>
-                        <p onClick={()=>onSelectAnswer(index, isCorrect )}>{option.text}</p>
+                    return <div onClick={()=>onSelectAnswer(index, isCorrect )} className={`${s.option} ${isAnsweredStyle}`}>
+                        <p >{option.text}</p>
                     </div>
                 })
             }

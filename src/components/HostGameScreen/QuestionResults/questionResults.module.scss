@@ -23,11 +23,11 @@
 }
 
 .option {
-  width: 45%;
+  width: 47%;
   border-radius: 10px;
   color: black;
   position: relative;
-  outline: 1px solid rgba(0, 0, 0, 0.41);
+  outline: 2px solid rgb(217, 151, 152);
   padding: 20px;
 
 
@@ -44,8 +44,12 @@
     left: 0;
     height: 100%;
   }
-}
 
+}
+.correct{
+  outline: 2px solid rgb(23, 158, 23);
+
+}
 .bottom_wrap {
   margin-top: auto;
   display: flex;

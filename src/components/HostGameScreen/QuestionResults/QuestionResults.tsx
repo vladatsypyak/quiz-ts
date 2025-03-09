@@ -18,8 +18,10 @@ const QuestionResults = ({gameData, onNextRoundClick}: { gameData: any, onNextRo
                     <div className={s.question_wrap}><p>{quiz.questions[roundNumber].question}</p></div>
                     <div className={s.options}>
                         {quiz.questions[roundNumber].options.map((option: any) => {
+                            console.log(5456)
+                            console.log(option.isCorrect)
                             return (
-                                <div className={s.option}>
+                                <div className={`${s.option} ${option.isCorrect ? s.correct : null}`}>
                                     <p>{option.text}</p>
 
                                     <div style={{width: "50%"}} className={s.option_bg}>
@@ -66,8 +68,11 @@ const QuestionResults = ({gameData, onNextRoundClick}: { gameData: any, onNextRo
                 <div className={s.options}>
                     {quiz.questions[roundNumber].options.map((option: any, index) => {
                         return (
-                            <div className={s.option}>
-                               <div style={{width: calculatePercent(index)}} className={s.option_bg}>
+                            <div className={`${s.option} ${option.isCorrect ? s.correct : null}`}>
+                               <div style={
+                                   {width: calculatePercent(index),
+                                       backgroundColor: option.isCorrect ? "rgb(88,220,88)" : "rgb(217,151,152)"
+                               }} className={s.option_bg}>
 
                                </div>
                                 <p>{option.text}</p>
@@ -77,7 +82,7 @@ const QuestionResults = ({gameData, onNextRoundClick}: { gameData: any, onNextRo
                     })}
                 </div>
                 <div className={s.bottom_wrap}>
-                    <p className={s.text}>Відповіли 3\3</p>
+                    <p className={s.text}>Відповіли {currentGameData.playersAnswered}\{currentGameData.players.length}</p>
                     <button className={s.btn} onClick={onNextRoundClick}>next</button>
                 </div>
 
