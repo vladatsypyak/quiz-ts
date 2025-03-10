@@ -70,7 +70,6 @@ const handleAddQuestionBtn = (e: any) => {
     }]
     setQuizData(newQuizData)
 }
-    console.log(quizData)
     return (
         <form onSubmit={(e)=>storeQuizData(e, quizData, title)} className={s.container}>
 

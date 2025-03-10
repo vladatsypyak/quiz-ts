@@ -93,7 +93,6 @@ export const QuizzesSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchQuizzes.fulfilled, (state, action: PayloadAction<QuizType[]>) => {
-                console.log(action.payload)
                 state.quizzes = action.payload;
                 state.loading = false;
             })
