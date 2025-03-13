@@ -2,6 +2,7 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../redux/store";
 import s from "./finalResults.module.scss";
+import Question from "./Question";
 
 
 const FinalResults = () => {
@@ -16,41 +17,29 @@ const FinalResults = () => {
     }
     return (
         <div className={s.wrapper}>
-            {
-                currentGameData ? <div className={s.players_wrap}>
-                    {currentGameData.players.map(player => {
-                        return <div className={s.player}>
-                            <p>{player.name} : {currentGameData.playerStats[player.name]?.correct} / {quiz?.questions.length}</p>
-                        </div>
-                    })}
-                </div> : null
-
-            }
-            {
-
-                quiz && currentGameData ? <div>
-                    {quiz?.questions.map((questionData: any, questionIndex: number) => {
-                        return (
-                            <div className={s.question_wrap}>
-                                <div className={s.question}>
-                                    {questionData.question}
-                                    <p>percent: {countPercentOfCorrectOptions(questionIndex)}</p>
-                                </div>
-                                {questionData.options.map((option: any, optionIndex: number) => {
-                                    return <div className={`${s.option} ${option.isCorrect ? s.correct : null}`}>
-                                        <p>{option.text}</p>
-                                        {option.image ? <img src={option.image} alt=""/> : null}
-                                        <p>chosen: {currentGameData.results[questionIndex][optionIndex]?.length || 0} / {currentGameData.players.length}</p>
-                                    </div>
-
-                                })
-                                }
+            <h2 className={s.title}>Результати</h2>
+            <div className={s.flex_wrap}>
+                {
+                    currentGameData ? <div className={s.players_wrap}>
+                        {currentGameData.players.map(player => {
+                            return <div className={s.player}>
+                                <p>{player.name} : <span>{currentGameData.playerStats[player.name]?.correct} / {quiz?.questions.length}</span></p>
                             </div>
-                        )
-                    })}
-                </div> : null
-            }
+                        })}
+                    </div> : null
 
+                }
+                {
+
+                    quiz && currentGameData ? <div className={s.questions_wrap}>
+                        {quiz?.questions.map((questionData: any, questionIndex: number) => {
+                            return <Question  questionData={questionData} questionIndex={questionIndex} countPercentOfCorrectOptions={countPercentOfCorrectOptions} currentGameData={currentGameData}/>
+                        })}
+                    </div> : null
+                }
+
+
+            </div>
 
         </div>
 
