@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import Login from "./components/auth/Login";
 import SignUp from "./components/auth/SignUp";
-import {Routes, Route} from 'react-router-dom';
+import {Routes, Route, useParams} from 'react-router-dom';
 import Main from "./components/Main/Main";
 import Header from "./components/Header/Header";
 import {useDispatch, useSelector, TypedUseSelectorHook} from "react-redux";

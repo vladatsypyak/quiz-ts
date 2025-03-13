@@ -1,7 +1,9 @@
 import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
-import {collection, getDocs} from "firebase/firestore";
+import {collection, getDocs, getFirestore} from "firebase/firestore";
 import {db} from '../../firebase';
 import {doc, getDoc} from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
+
 
 import exp from "constants";
 import {GameData} from "../../components/HostGameScreen/PlayersWaitingScreen/PlayersWaitingScreen";
@@ -64,6 +66,51 @@ export const fetchQuizById = async (docId: string) => {
     }
 };
 
+export const fetchGameData = createAsyncThunk<GameData, string>(
+    "quiz/fetchGameData",
+    async (gameId: string, {rejectWithValue}) => {
+        try {
+            const docRef = doc(db, "games", gameId);
+            const docSnap = await getDoc(docRef);
+
+            if (!docSnap.exists()) {
+                throw new Error("Game not found");
+            }
+
+            return docSnap.data() as GameData;
+        } catch (error) {
+
+            if (error instanceof Error) {
+                return rejectWithValue(error.message);
+            }
+            return rejectWithValue("Error while fetching gameData");
+        }
+    }
+);
+export const fetchQuiz = createAsyncThunk<QuizType, string>(
+    "quiz/fetchQuiz",
+    async (quizId: string, {rejectWithValue}) => {
+        try {
+            console.log(quizId)
+            const docRef = doc(db, "quiz", quizId);
+
+            const docSnap = await getDoc(docRef);
+            console.log(docSnap.data())
+
+            if (!docSnap.exists()) {
+                throw new Error("Quiz not found");
+            }
+            return docSnap.data() as QuizType;
+        } catch (error) {
+
+            if (error instanceof Error) {
+                return rejectWithValue(error.message);
+            }
+            return rejectWithValue("Error while fetching quiz");
+        }
+    }
+);
+
 const initialState: QuizzesState = {
     quizzes: [],
     loading: false,
@@ -82,7 +129,7 @@ export const QuizzesSlice = createSlice({
         setCurrentQuiz: (state, action: PayloadAction<QuizType>) => {
             state.currentQuiz = action.payload
         },
-        setCurrentGameData: (state, action: PayloadAction<GameData>) =>{
+        setCurrentGameData: (state, action: PayloadAction<GameData>) => {
             state.currentGameData = action.payload
         }
     },
@@ -99,7 +146,13 @@ export const QuizzesSlice = createSlice({
             .addCase(fetchQuizzes.rejected, (state, action: PayloadAction<string | undefined>) => {
                 state.loading = false;
                 state.error = action.payload ?? 'Failed to fetch quizzes';
-            });
+            })
+            .addCase(fetchGameData.fulfilled, (state, action: PayloadAction<GameData>) => {
+                state.currentGameData = action.payload
+            })
+            .addCase(fetchQuiz.fulfilled, (state, action: PayloadAction<QuizType>) => {
+                state.currentQuiz = action.payload
+            })
     },
 });
 

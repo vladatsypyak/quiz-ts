@@ -1,16 +1,34 @@
-import React from "react";
-import {useSelector} from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/store";
 import s from "./finalResults.module.scss";
 import Question from "./Question";
+import {useParams} from "react-router-dom";
+import {fetchGameData, fetchQuiz} from "../../../redux/slices/quizzesSlice";
+import {useAppDispatch} from "../../Home/Home";
 
 
 const FinalResults = () => {
     const currentGameData = useSelector((state: RootState) => state.quizzesSlice.currentGameData)
     const quiz = useSelector((store: RootState) => store.quizzesSlice.currentQuiz)
+    const dispatch = useAppDispatch();
+    const { gameId } = useParams();
+
+    useEffect(() => {
+        if (gameId) {
+            dispatch(fetchGameData(gameId));
+        }
+    }, [dispatch, gameId]);
+
+    useEffect(() => {
+        if (currentGameData) {
+            dispatch(fetchQuiz(currentGameData.quizId));
+        }
+    }, [dispatch, currentGameData]);
 
     const countPercentOfCorrectOptions = (questionIndex: number) => {
-       const numberOfCorrect =  currentGameData?.questionsStats[questionIndex]
+        if(!currentGameData?.questionsStats) return 0
+       const numberOfCorrect =  currentGameData?.questionsStats[questionIndex] || 0
         console.log(numberOfCorrect)
         const totalAnswers = currentGameData?.players.length || 0
         return numberOfCorrect * 100 / totalAnswers

@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../../redux/store";
 import {QuizType} from "../../../redux/slices/quizzesSlice";
 import {db} from "../../../firebase";
-import {addDoc, doc, setDoc, collection} from "firebase/firestore";
+import {addDoc, doc, setDoc, collection, Timestamp} from "firebase/firestore";
 import {GameData} from "../../HostGameScreen/PlayersWaitingScreen/PlayersWaitingScreen";
 
 
@@ -28,7 +28,6 @@ const Quiz = ({quiz}: { quiz: QuizType }) => {
                 players: [],
                 results: [],
                 currentQuestion: 0,
-                createdAt: new Date(),
                 playerStats: [],
                 playersAnswered: 0,
                 questionsStats: null
